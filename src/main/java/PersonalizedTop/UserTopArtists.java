@@ -29,6 +29,12 @@ public class UserTopArtists {
 	private String OAuthCode;
 	private String accessToken;
 
+	/*
+	 * TODO: RUN ./ngrok http 8080 to get new redirect_uri every time you run the
+	 * ngrok server
+	 */
+	private String redirectURI = "http://82d5fe23.ngrok.io";
+
 	private List<Top50Artist> top50Artists;
 
 	public UserTopArtists() {
@@ -52,8 +58,8 @@ public class UserTopArtists {
 //				+ " https://accounts.spotify.com/api/token";
 
 		String command = "curl -d client_id=" + clientId + " -d client_secret=" + clientSecret
-				+ " -d grant_type=authorization_code -d code=" + OAuthCode
-				+ " -d redirect_uri=http://3f6f90a4.ngrok.io/homepage.html https://accounts.spotify.com/api/token";
+				+ " -d grant_type=authorization_code -d code=" + OAuthCode + " -d redirect_uri=" + redirectURI
+				+ "/homepage.html https://accounts.spotify.com/api/token";
 
 		Process process = null;
 		try {
