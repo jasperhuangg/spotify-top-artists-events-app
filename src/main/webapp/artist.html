@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="artist.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <title>Artist Page</title>
+  </head>
+  <body>
+    <div class="container-fluid"></div>
+  </body>
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="index.js"></script>
+  <script>
+    let requestedArtist = localStorage["requestedArtist"];
+    console.log(requestedArtist);
+    $.get("ArtistEventServlet", {
+      requestedartist: requestedArtist
+    }).done(function(data) {
+      console.log(data.name);
+      console.log(data.imageURL);
+      for (let i = 0; i < data.upcomingEvents.length; i++) {
+        console.log(data.upcomingEvents[i].name);
+      }
+    });
+  </script>
+</html>

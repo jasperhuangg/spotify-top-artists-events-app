@@ -1,0 +1,23 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<web-app>
+	<servlet>
+		<servlet-name>ArtistEventServlet</servlet-name>
+		<servlet-class>Servlets.ArtistEventServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ArtistEventServlet</servlet-name>
+		<url-pattern>/ArtistEventServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Top50Servlet</servlet-name>
+		<servlet-class>Servlets.Top50Servlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Top50Servlet</servlet-name>
+		<url-pattern>/Top50Servlet</url-pattern>
+	</servlet-mapping>
+</web-app>

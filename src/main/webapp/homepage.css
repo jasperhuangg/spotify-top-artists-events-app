@@ -1,0 +1,276 @@
+.artist-img {
+  width: 225px;
+  height: 225px;
+  object-fit: cover;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.artist-overlay {
+  z-index: 10;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 95%;
+  width: 65%;
+  background-color: rgba(0, 0, 0, 0.9);
+  box-shadow: rgba(0, 0, 0, 0.4);
+  border-radius: 1%;
+}
+
+.x-out {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  font-size: 18px;
+  color: #da3849;
+  right: 4%;
+  font-size: 30px;
+}
+
+.x-out:hover {
+  cursor: pointer;
+}
+
+.artists-container {
+  margin: 0 auto;
+}
+
+.artist-name {
+  font-family: "Lato", sans-serif;
+  visibility: hidden;
+  position: absolute;
+  left: 8%;
+  bottom: 5px;
+  right: 0%;
+  color: white;
+  font-size: 16px;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.artist-overlay * {
+  display: inline-block;
+}
+
+.overlay-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.overlay-img img {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay-name {
+  left: 2%;
+  font-family: "Lato", sans-serif;
+}
+
+.list-group {
+  max-height: 350px;
+  bottom: 20%;
+  overflow: scroll;
+  font-family: "Baloo Da 2", cursive;
+  -ms-overflow-style: none;
+}
+
+.list-group::-webkit-scrollbar {
+  display: none;
+}
+
+.overlay-header {
+  height: 70%;
+  text-align: center;
+}
+
+.artist-item {
+  line-height: 225px;
+  border-radius: 50%;
+}
+
+.artist-item:hover .artist-img {
+  opacity: 1;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.artist-item:hover .artist-name {
+  visibility: visible;
+  opacity: 1;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+/* @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+
+.search-bar-container {
+  position: relative;
+  margin: 0 auto;
+  top: 50px;
+  width: 300px;
+  height: 200px;
+}
+
+/* .search-bar:focus .search-bar-container {
+  opacity: 1;
+} */
+.search-bar-container .search {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 80px;
+  background: #da3849;
+  border-radius: 50%;
+  transition: all 1s;
+  z-index: 4;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
+}
+.search-bar-container .search:hover {
+  cursor: pointer;
+}
+.search-bar-container .search::before {
+  content: "";
+  position: absolute;
+  margin: auto;
+  top: 22px;
+  right: 0;
+  bottom: 0;
+  left: 22px;
+  width: 12px;
+  height: 2px;
+  background: white;
+  transform: rotate(45deg);
+  transition: all 0.5s;
+}
+.search-bar-container .search::after {
+  content: "";
+  position: absolute;
+  margin: auto;
+  top: -5px;
+  right: 0;
+  bottom: 0;
+  left: -5px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 2px solid white;
+  transition: all 0.5s;
+}
+.search-bar-container input {
+  font-family: "Baloo Da 2", cursive;
+  font-size: 16px;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  outline: none;
+  border: none;
+  background: #da3849;
+  color: white;
+  text-shadow: 0 0 10px #da3849;
+  padding: 0 80px 0 20px;
+  border-radius: 30px;
+  box-shadow: 0 0 25px 0 #da3849, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
+  transition: all 1s;
+  opacity: 0;
+  z-index: 5;
+  letter-spacing: 0.1em;
+}
+.search-bar-container input:hover {
+  cursor: pointer;
+}
+.search-bar-container input:focus {
+  width: 300px;
+  opacity: 1;
+  cursor: text;
+}
+.search-bar-container input:focus ~ .search {
+  right: -250px;
+  background: #151515;
+  z-index: 6;
+}
+.search-bar-container input:focus ~ .search::before {
+  top: 0;
+  left: 0;
+  width: 25px;
+}
+.search-bar-container input:focus ~ .search::after {
+  top: 0;
+  left: 0;
+  width: 25px;
+  height: 2px;
+  border: none;
+  background: white;
+  border-radius: 0%;
+  transform: rotate(-45deg);
+}
+.search-bar-container input::placeholder {
+  color: white;
+  opacity: 0.5;
+  font-weight: bolder;
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #da3849 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.events-redirect {
+  bottom: 30%;
+  left: 10%;
+}
+
+.btn {
+  font-family: "Lato", san-serif;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+Da+2&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="homepage.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <title>Artists of the Spotify Top 50</title>
+  </head>
+  <body class="bg-dark">
+    <div class="container-fluid">
+      <div class="text-center search-bar-container form-group-lg">
+        <input
+          spellcheck="false"
+          id="search-bar"
+          type="text"
+          placeholder="Filter artists..."
+        />
+        <div class="search"></div>
+      </div>
+
+      <div
+        class="mt-5 row justify-content-around text-center"
+        id="artists-container"
+      >
+        <div class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="homepage.js"></script>
+    <script
+      src="https://kit.fontawesome.com/e6a392354b.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
