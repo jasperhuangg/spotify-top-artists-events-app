@@ -23,17 +23,15 @@ public class UserTopArtists {
 	private static final String clientId = "81b1695da7764d3a86a1bab842ca436f";
 	private static final String clientSecret = "d2f5b45becf949ad97ee2440a92ff80d";
 	private SpotifyApi spotifyApi;
-//	private static final ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
-//	private static final String code = "";
 
 	private String OAuthCode;
 	private String accessToken;
 
 	/*
 	 * TODO: RUN ./ngrok http 8080 to get new redirect_uri every time you run the
-	 * ngrok server
+	 * ngrok server, don't forget to change on Spotify Dashboard.
 	 */
-	private String redirectURI = "http://82d5fe23.ngrok.io";
+	private String redirectURI = "https://11f22450.ngrok.io";
 
 	private List<Top50Artist> top50Artists;
 
@@ -111,8 +109,11 @@ public class UserTopArtists {
 		System.out.println("YOUR TOP 50 MOST PLAYED SPOTIFY ARTISTS: ");
 		for (int i = 0; i < artistPaging.getTotal(); i++) {
 			System.out.println("ARTIST: " + artistPaging.getItems()[i].getName());
+			Artist a = artistPaging.getItems()[i];
 			Top50Artist artist = new Top50Artist();
-			artist.setName(artistPaging.getItems()[i].getName());
+			artist.setName(a.getName());
+			artist.setImageURL(a.getImages()[0].getUrl());
+			artist.setSpotifyURL(a.getHref());
 			t.add(artist);
 		}
 		return t;

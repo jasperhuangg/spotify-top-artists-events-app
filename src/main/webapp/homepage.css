@@ -21,11 +21,10 @@
 
 .x-out {
   position: absolute;
-  top: 8px;
-  right: 16px;
-  font-size: 18px;
+  top: 0px;
+  right: 20px;
   color: #da3849;
-  right: 4%;
+  /* right: 4%; */
   font-size: 30px;
 }
 
@@ -69,7 +68,7 @@
 }
 
 .overlay-name {
-  left: 2%;
+  /* left: 2%; */
   font-family: "Lato", sans-serif;
 }
 
@@ -268,7 +267,7 @@
 
 .events-redirect {
   bottom: 30%;
-  left: 10%;
+  left: 20% !important;
 }
 
 .btn {

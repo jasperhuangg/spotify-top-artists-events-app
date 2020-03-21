@@ -22,6 +22,7 @@ public class Top50Artist implements Comparable<Top50Artist> {
 	private List<Top50Track> top50Tracks = new ArrayList<Top50Track>();
 	private Integer top50Score; // sum(track popularity)
 	private String imageURL;
+	private String spotifyURL;
 	private String songKickAPIKey = "io09K9l3ebJxmxe2";
 	private List<UpcomingEvent> upcomingEvents;
 
@@ -222,6 +223,14 @@ public class Top50Artist implements Comparable<Top50Artist> {
 
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
+	}
+
+	public String getSpotifyURL() {
+		return spotifyURL;
+	}
+
+	public void setSpotifyURL(String spotifyURL) {
+		this.spotifyURL = spotifyURL;
 	}
 
 }

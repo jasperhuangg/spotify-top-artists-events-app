@@ -13,13 +13,17 @@
   <body>
     <div class="container-fluid"></div>
   </body>
-  <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script type="text/javascript" src="index.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <!-- <script type="text/javascript" src="index.js"></script> -->
   <script>
     let requestedArtist = localStorage["requestedArtist"];
+    let top50ArtistsJson = localStorage["top50artists"];
     console.log(requestedArtist);
-    $.get("ArtistEventServlet", {
-      requestedartist: requestedArtist
+
+    /* TODO: changed from get to post request, post request throwing 405 (Method Not Allowed) */
+    $.post("ArtistEventServlet", {
+      requestedartist: requestedArtist,
+      top50artists: top50ArtistsJson
     }).done(function(data) {
       console.log(data.name);
       console.log(data.imageURL);

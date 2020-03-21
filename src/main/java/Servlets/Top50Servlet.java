@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import PersonalizedTop.UserTopArtists;
 import Top50.Top50Artist;
 
@@ -30,10 +32,10 @@ public class Top50Servlet extends HttpServlet {
 //		List<Top50Artist> top50Artists = top50.getTop50Artists();
 
 		// original code
-//		String top50ArtistsJson = new Gson().toJson(top50);
-//		res.setContentType("application/json");
-//		res.setCharacterEncoding("UTF-8");
-//		res.getWriter().write(top50ArtistsJson);
+		String top50ArtistsJson = new Gson().toJson(top50Artists);
+		res.setContentType("application/json");
+		res.setCharacterEncoding("UTF-8");
+		res.getWriter().write(top50ArtistsJson);
 
 //		session.setAttribute("top50list", top50Artists);
 //
