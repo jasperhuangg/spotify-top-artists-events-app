@@ -150,7 +150,7 @@ $(document).on("click", ".artist-item", function() {
         overlayEvents.css("color", "white");
       } else {
         let songkickAttr =
-          '<div id="sk-attr" class="text-center"><img width="84.52" height="30" src="assets/powered-by-sk/powered-by-songkick-pink.png"></div>';
+          '<div id="sk-attr" class="text-center"><img width="84.52" height="30" src="assets/powered-by-sk/powered-by-songkick-white.png"></div>';
         let tableStr = '<table class="table table-dark"><tbody>';
         for (let i = 0; i < responseJson.length; i++) {
           let eventName = responseJson[i].name;
