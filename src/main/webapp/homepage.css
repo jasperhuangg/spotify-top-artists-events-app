@@ -14,7 +14,7 @@
   transform: translate(-50%, -50%);
   height: 95%;
   width: 65%;
-  background-color: rgba(0, 0, 0, 1);
+  background-color: rgba(10, 10, 10, 1);
   box-shadow: rgba(0, 0, 0, 0.4);
   border-radius: 2%;
   overflow: hidden;
@@ -107,7 +107,7 @@ body {
   height: 100%;
   overflow: scroll;
   scrollbar-color: red yellow;
-  font-family: "Baloo Da 2", cursive;
+  font-family: "Open Sans", sans-serif;
 }
 
 .events-loader {
@@ -118,7 +118,7 @@ body {
   max-height: 350px;
   bottom: 20%;
   overflow: scroll;
-  font-family: "Baloo Da 2", cursive;
+  font-family: "Open Sans", sans-serif;
   -ms-overflow-style: none;
 }
 
@@ -214,7 +214,7 @@ body {
   transition: all 0.5s;
 }
 .search-bar-container input {
-  font-family: "Baloo Da 2", cursive;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   position: absolute;
   margin: auto;

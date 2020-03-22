@@ -118,7 +118,7 @@ $(document).on("click", ".artist-item", function() {
     var overlayImg = $(
       '<div class="col-7 overlay-img"><img  src="' +
         artistImgURL +
-        '"><div class="x-out"><i class="fas fa-times-circle"></i></div></div>'
+        '"><div class="x-out"><i class="far fa-times-circle"></i></div></div>'
     );
 
     overlayHeader.append(overlayName);
@@ -129,14 +129,14 @@ $(document).on("click", ".artist-item", function() {
 
     $("#page-container").append(artistOverlay);
 
-    console.log("doing get for: " + artistName);
+    // console.log("doing get for: " + artistName);
     // make request to ArtistEventServlet, get artist's events
     $.get("ArtistEventServlet", { requestedartist: artistName }).done(function(
       responseJson
     ) {
-      console.log(
-        "returned " + responseJson.length + " events for: " + artistName
-      );
+      // console.log(
+      //   "returned " + responseJson.length + " events for: " + artistName
+      // );
 
       // $(document).ready(function() {
       if (responseJson.length === 0) {
@@ -147,7 +147,7 @@ $(document).on("click", ".artist-item", function() {
         overlayEvents.html("This artist has no upcoming events.");
         overlayEvents.css("color", "white");
       } else {
-        console.log("showing events for " + artistName);
+        // console.log("showing events for " + artistName);
         $(document)
           .find("#overlay-events-" + artistNameNoSpace)
           .html(
@@ -159,13 +159,13 @@ $(document).on("click", ".artist-item", function() {
           )
           .end();
         overlayEvents.css("color", "white");
-        console.log("id is: " + overlayEvents.attr("id"));
-        console.log(
-          "overlayEvents innerHTML says: " +
-            $(document)
-              .find("#overlay-events-" + artistNameNoSpace)
-              .html()
-        );
+        // console.log("id is: " + overlayEvents.attr("id"));
+        // console.log(
+        //   "overlayEvents innerHTML says: " +
+        //     $(document)
+        //       .find("#overlay-events-" + artistNameNoSpace)
+        //       .html()
+        // );
       }
       // });
     });
