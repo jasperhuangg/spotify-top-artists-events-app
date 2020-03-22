@@ -1,9 +1,13 @@
 .artist-img {
-  width: 225px;
-  height: 225px;
+  width: 175px;
+  height: 175px;
   object-fit: cover;
   border-radius: 20%;
   opacity: 0.5;
+}
+
+#sk-attr {
+  width: 100%;
 }
 
 .artist-overlay {
@@ -12,13 +16,34 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 95%;
+  height: 700px;
   width: 65%;
   background-color: rgba(6, 6, 6, 1);
   box-shadow: rgba(0, 0, 0, 0.4);
   border-radius: 2%;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .artist-overlay {
+    height: 550px;
+    width: 90%;
+  }
+  .overlay-header {
+    height: 200px;
+  }
+
+  .artist-img {
+    width: 125px;
+    height: 125px;
+  }
+  .overlay-events {
+    height: 25%;
+  }
+  td {
+    font-size: 12px;
+  }
 }
 
 table {
@@ -32,8 +57,13 @@ tr {
   width: 100%;
 }
 
+td {
+  font-family: "Open Sans", sans-serif;
+}
+
 body {
   background-color: rgb(17, 17, 17) !important;
+  overflow-x: hidden;
   /* scrollbar-width: thin;
   scrollbar-color: dark; */
 }
@@ -69,19 +99,22 @@ body {
 
 .artists-container {
   margin: 0 auto;
+  overflow-x: hidden;
 }
 
 .artist-name {
   font-family: "Lato", sans-serif;
   visibility: hidden;
   position: absolute;
-  left: 8%;
+  left: 1%;
   bottom: 5px;
   right: 0%;
   color: white;
   font-size: 16px;
   border-radius: 20%;
   margin: 0 auto;
+  width: 100%;
+  height: 100%;
 }
 
 .artist-overlay * {
@@ -115,11 +148,15 @@ body {
   font-family: "Lato", sans-serif;
 }
 
+#page-container {
+  overflow-x: hidden;
+}
+
 .overlay-events {
-  padding-top: 52.5%;
+  margin-top: 450px;
   z-index: 500;
   background-color: rgba(6, 6, 6, 1);
-  height: 100%;
+  height: 35%;
   display: block;
   overflow-y: auto;
   overflow-x: hidden;
@@ -147,7 +184,7 @@ body {
 }
 
 .overlay-header {
-  height: 65%;
+  height: 450px;
   text-align: center;
   position: fixed;
   z-index: 9999;
@@ -155,7 +192,7 @@ body {
 }
 
 .artist-item {
-  line-height: 225px;
+  line-height: 175px;
   border-radius: 20%;
 }
 

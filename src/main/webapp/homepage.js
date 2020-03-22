@@ -20,7 +20,7 @@ $.get("Top50Servlet", {
     // Iterate over the JSON array.
     // for (let i = 0; i < item.length; i++) {
     var artistItem = $(
-      '<div class="col-lg-2 col-md-3 col-sm-4 m-2 mt-4 mb-4 artist-item"><div>'
+      '<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 m-2 mt-4 mb-4 artist-item"><div>'
     );
     var artistName = $(
       '<div class="text-center artist-name font-italic">' + item.name + "</div>"
@@ -149,6 +149,8 @@ $(document).on("click", ".artist-item", function() {
         );
         overlayEvents.css("color", "white");
       } else {
+        let songkickAttr =
+          '<div id="sk-attr" class="text-center"><img width="84.52" height="30" src="assets/powered-by-sk/powered-by-songkick-pink.png"></div>';
         let tableStr = '<table class="table table-dark"><tbody>';
         for (let i = 0; i < responseJson.length; i++) {
           let eventName = responseJson[i].name;
@@ -159,15 +161,18 @@ $(document).on("click", ".artist-item", function() {
           let eventStatus = responseJson[i].status;
           let eventVenue = responseJson[i].venueName;
           tableStr +=
-            '<tr scope="row"><td style="width: 13%">' + eventDate + "</td>";
+            '<tr scope="row"><td style="width: 16%"><b>' +
+            eventDate +
+            "</b></td>";
           tableStr += '<td style="width: 52%">' + eventName + "</td>";
-          tableStr += '<td style="width: 25%">' + eventCity + "</td>";
+          tableStr += '<td style="width: 22%">' + eventCity + "</td>";
           tableStr +=
-            '<td style="width: 10%"><img class="songkickimg" onclick="songkickRedirect(\'' +
+            // '<td style="width: 10%"><img class="songkickimg" onclick="songkickRedirect(\'' +
+            '<td style="width: 10%"><button type="button" class="btn btn-danger" onclick="songkickRedirect(\'' +
             eventSongkickURL +
-            '\')" width="25" height="25" src="/assets/sk-badge/sk-badge-white.png"></a></td></tr>';
+            "')\" >Tickets</button></td></tr>";
           if (i === responseJson.length - 1) {
-            tableStr += "</tbody></table>";
+            tableStr += "</tbody></table>" + songkickAttr;
           }
         }
         overlayEvents.removeClass("text-center");
