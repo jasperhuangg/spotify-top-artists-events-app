@@ -118,7 +118,7 @@ $(document).on("click", ".artist-item", function() {
     var overlayImg = $(
       '<div class="col-7 overlay-img"><img  src="' +
         artistImgURL +
-        '"><div class="x-out"><i class="far fa-times-circle"></i></div></div>'
+        '"><div class="x-out"><i class="fas fa-times-circle"></i></div></div>'
     );
 
     overlayHeader.append(overlayName);
