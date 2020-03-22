@@ -119,7 +119,18 @@ public class Top50Artist implements Comparable<Top50Artist> {
 					// TODO: HANDLE NULL VALUES, add event image
 
 					UpcomingEvent e = new UpcomingEvent();
-					e.setName(events.get(i).getAsJsonObject().get("displayName").getAsString());
+
+					int openParenIndex = events.get(i).getAsJsonObject().get("displayName").getAsString().indexOf('(');
+					int closedParenIndex = events.get(i).getAsJsonObject().get("displayName").getAsString()
+							.indexOf(')');
+					String nameParsed = events.get(i).getAsJsonObject().get("displayName").getAsString();
+					if (openParenIndex != -1 && closedParenIndex != -1) {
+						String parenSubstr = events.get(i).getAsJsonObject().get("displayName").getAsString()
+								.substring(openParenIndex, closedParenIndex + 1);
+						nameParsed = events.get(i).getAsJsonObject().get("displayName").getAsString()
+								.replace(parenSubstr, "");
+					}
+					e.setName(nameParsed);
 //				System.out.println(events.get(i).getAsJsonObject().get("displayName").getAsString());
 					e.setSongKickURL(events.get(i).getAsJsonObject().get("uri").getAsString());
 //				System.out.println(events.get(i).getAsJsonObject().get("uri").getAsString());

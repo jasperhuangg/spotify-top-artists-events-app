@@ -17,11 +17,23 @@
   background-color: rgba(6, 6, 6, 1);
   box-shadow: rgba(0, 0, 0, 0.4);
   border-radius: 2%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+table {
+  margin: auto;
+  width: 100% !important;
+  display: inline-block !important;
+  background-color: rgba(6, 6, 6, 1) !important;
+}
+
+tr {
+  width: 100%;
 }
 
 body {
-  background-color: rgb(25, 25, 25) !important;
+  background-color: rgb(17, 17, 17) !important;
   /* scrollbar-width: thin;
   scrollbar-color: dark; */
 }
@@ -104,14 +116,22 @@ body {
 }
 
 .overlay-events {
+  padding-top: 52.5%;
+  z-index: 500;
+  background-color: rgba(6, 6, 6, 1);
   height: 100%;
-  overflow: scroll;
-  scrollbar-color: red yellow;
+  display: block;
+  overflow-y: auto;
+  overflow-x: hidden;
   font-family: "Open Sans", sans-serif;
 }
 
+.songkickimg:hover {
+  cursor: pointer;
+}
+
 .events-loader {
-  margin-top: 10%;
+  margin-top: 7.5%;
 }
 
 .list-group {
@@ -129,6 +149,9 @@ body {
 .overlay-header {
   height: 65%;
   text-align: center;
+  position: fixed;
+  z-index: 9999;
+  background-color: rgba(6, 6, 6, 1);
 }
 
 .artist-item {

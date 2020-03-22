@@ -134,9 +134,9 @@ $(document).on("click", ".artist-item", function() {
     $.get("ArtistEventServlet", { requestedartist: artistName }).done(function(
       responseJson
     ) {
-      // console.log(
-      //   "returned " + responseJson.length + " events for: " + artistName
-      // );
+      console.log(
+        "returned " + responseJson.length + " events for: " + artistName
+      );
 
       // $(document).ready(function() {
       if (responseJson.length === 0) {
@@ -144,33 +144,48 @@ $(document).on("click", ".artist-item", function() {
         //   "This artist has no upcoming events."
         // );
         // $("#overlay-events-" + artistNameNoSpace).css("color", "white");
-        overlayEvents.html("This artist has no upcoming events.");
+        overlayEvents.html(
+          "<table><br><br><br>This artist has no upcoming events.</table>"
+        );
         overlayEvents.css("color", "white");
       } else {
+        let tableStr = '<table class="table table-dark"><tbody>';
+        for (let i = 0; i < responseJson.length; i++) {
+          let eventName = responseJson[i].name;
+          let eventCity = responseJson[i].city;
+          let eventSongkickURL = responseJson[i].songKickURL;
+          let eventDate = responseJson[i].date;
+          let eventTime = responseJson[i].time;
+          let eventStatus = responseJson[i].status;
+          let eventVenue = responseJson[i].venueName;
+          tableStr +=
+            '<tr scope="row"><td style="width: 13%">' + eventDate + "</td>";
+          tableStr += '<td style="width: 52%">' + eventName + "</td>";
+          tableStr += '<td style="width: 25%">' + eventCity + "</td>";
+          tableStr +=
+            '<td style="width: 10%"><img class="songkickimg" onclick="songkickRedirect(\'' +
+            eventSongkickURL +
+            '\')" width="25" height="25" src="/assets/sk-badge/sk-badge-white.png"></a></td></tr>';
+          if (i === responseJson.length - 1) {
+            tableStr += "</tbody></table>";
+          }
+        }
+        overlayEvents.removeClass("text-center");
         // console.log("showing events for " + artistName);
         $(document)
           .find("#overlay-events-" + artistNameNoSpace)
-          .html(
-            "This area will show " +
-              artistName +
-              "'s " +
-              responseJson.length +
-              " events."
-          )
+          .html(tableStr)
           .end();
         overlayEvents.css("color", "white");
-        // console.log("id is: " + overlayEvents.attr("id"));
-        // console.log(
-        //   "overlayEvents innerHTML says: " +
-        //     $(document)
-        //       .find("#overlay-events-" + artistNameNoSpace)
-        //       .html()
-        // );
       }
       // });
     });
   }
 });
+
+function songkickRedirect(url) {
+  window.open(url);
+}
 
 $("#search-bar").on("keyup", function() {
   artists = document.getElementsByClassName("artist-item");
