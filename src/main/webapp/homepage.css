@@ -247,7 +247,7 @@ body {
 }
 .search-bar-container input:focus ~ .search {
   right: -250px;
-  background: #151515;
+  background: rgba(6, 6, 6, 1);
   z-index: 6;
 }
 .search-bar-container input:focus ~ .search::before {
