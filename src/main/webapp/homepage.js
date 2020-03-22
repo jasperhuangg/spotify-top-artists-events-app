@@ -4,7 +4,7 @@ let codeStartIndex = currentURL.search("code") + 5;
 
 let authCode = currentURL.substring(codeStartIndex, currentURL.length);
 
-console.log(authCode);
+// console.log(authCode);
 
 let arr;
 // $.get("Top50Servlet").done(function(responseJson)
@@ -12,8 +12,8 @@ $.get("Top50Servlet", {
   oauthcode: authCode
 }).done(function(responseJson) {
   localStorage["top50artists"] = JSON.stringify(responseJson);
-  console.log("done");
-  console.log(responseJson);
+  // console.log("done");
+  // console.log(responseJson);
   $(".lds-ring").remove();
   // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
   $.each(responseJson, function(index, item) {
@@ -50,14 +50,14 @@ $(document).on("click", ".artist-item", function() {
   let artistName = $(this).children()[1].innerHTML;
   let artistNameNoSpace = $(this)
     .children()[1]
-    .innerHTML.replace(" ", "-");
+    .innerHTML.replace(/ /g, "-");
   let artistImgURL = $(this).children()[2].src;
   let artistSpotifyUrl = $(this).children()[3].innerHTML;
   let artistRanking = $(this).children()[4].innerHTML;
 
   let overlays = $(".artist-overlay");
   // console.log(overlays.length + " overlays exist");
-
+  var overlayEvents;
   let overlayThatAlreadyExists = null;
 
   // check if an overlay already exists with the artist's name
@@ -65,7 +65,11 @@ $(document).on("click", ".artist-item", function() {
   // if one doesn't exist, create it
 
   for (let i = 0; i < overlays.length; i++) {
-    if (overlays[i].children[0].children[0].innerHTML === artistName) {
+    // console.log("Checking overlays");
+    // console.log(overlays[i].children[0].children[0].innerHTML);
+    if (
+      overlays[i].children[0].children[0].children[0].innerHTML === artistName
+    ) {
       // if we are clicking on an overlay that already exists
       overlayThatAlreadyExists = overlays[i];
       // console.log("overlay you just clicked already exists.");
@@ -75,19 +79,25 @@ $(document).on("click", ".artist-item", function() {
 
   if (overlayThatAlreadyExists === null) {
     // create overlay element
-    var artistOverlay = $('<div class="artist-overlay"></div>');
+    var artistOverlay = $(
+      '<div class="artist-overlay" id="artist-overlay-' +
+        artistNameNoSpace +
+        '"></div>'
+    );
     var overlayHeader = $(
       '<div class="row align-items-center overlay-header"></div>'
     );
     var overlayName = $(
-      '<div class="col-5 h1 font-italic overlay-name text-center text-white">' +
+      '<div class="col-5 h1 overlay-name text-center text-white">' +
         artistRanking +
         ". " +
+        "<i>" +
         artistName +
+        "</i>" +
         "</div>"
     );
 
-    var overlayEvents = $(
+    overlayEvents = $(
       '<div id="overlay-events-' +
         artistNameNoSpace +
         '"class="overlay-events container-fluid text-center"></div>'
@@ -116,8 +126,8 @@ $(document).on("click", ".artist-item", function() {
     overlayHeader.append(overlaySpotifyRedirect);
     artistOverlay.append(overlayHeader);
     artistOverlay.append(overlayEvents);
-    // artistOverlay.append(overlayTracklist);
-    $(".container-fluid").append(artistOverlay);
+
+    $("#page-container").append(artistOverlay);
 
     console.log("doing get for: " + artistName);
     // make request to ArtistEventServlet, get artist's events
@@ -128,28 +138,36 @@ $(document).on("click", ".artist-item", function() {
         "returned " + responseJson.length + " events for: " + artistName
       );
 
-      /* TODO: since the overlay-events div is being created dynamically,
-      the ID selector doesn't work (only the first one works).
-      Can't display artist's events till this is resolved. */
-
-      $(document).ready(function() {
-        if (responseJson.length === 0) {
-          $("#overlay-events-" + artistNameNoSpace).html(
-            "This artist has no upcoming events."
-          );
-          $("#overlay-events-" + artistNameNoSpace).css("color", "white");
-        } else {
-          console.log("showing events for " + artistName);
-
-          $("#overlay-events-" + artistNameNoSpace).html(
+      // $(document).ready(function() {
+      if (responseJson.length === 0) {
+        // $("#overlay-events-" + artistNameNoSpace).html(
+        //   "This artist has no upcoming events."
+        // );
+        // $("#overlay-events-" + artistNameNoSpace).css("color", "white");
+        overlayEvents.html("This artist has no upcoming events.");
+        overlayEvents.css("color", "white");
+      } else {
+        console.log("showing events for " + artistName);
+        $(document)
+          .find("#overlay-events-" + artistNameNoSpace)
+          .html(
             "This area will show " +
               artistName +
               "'s " +
               responseJson.length +
               " events."
-          );
-        }
-      });
+          )
+          .end();
+        overlayEvents.css("color", "white");
+        console.log("id is: " + overlayEvents.attr("id"));
+        console.log(
+          "overlayEvents innerHTML says: " +
+            $(document)
+              .find("#overlay-events-" + artistNameNoSpace)
+              .html()
+        );
+      }
+      // });
     });
   }
 });

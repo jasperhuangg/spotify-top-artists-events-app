@@ -17,6 +17,7 @@
   background-color: rgba(0, 0, 0, 0.9);
   box-shadow: rgba(0, 0, 0, 0.4);
   border-radius: 1%;
+  overflow: hidden;
 }
 
 .x-out {
@@ -74,6 +75,8 @@
 
 .overlay-events {
   height: 100%;
+  overflow: scroll;
+  scrollbar-color: red yellow;
   font-family: "Baloo Da 2", cursive;
 }
 
@@ -94,7 +97,7 @@
 }
 
 .overlay-header {
-  height: 40%;
+  height: 65%;
   text-align: center;
 }
 

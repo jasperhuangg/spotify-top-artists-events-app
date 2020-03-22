@@ -30,7 +30,6 @@ public class Top50 {
 	public Top50() {
 
 		top50Artists = CreateTop50Artists();
-//		PrintTop50Artists();
 	}
 
 	private List<Top50Artist> CreateTop50Artists() {
