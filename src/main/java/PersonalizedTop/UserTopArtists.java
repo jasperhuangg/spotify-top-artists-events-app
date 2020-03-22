@@ -31,7 +31,7 @@ public class UserTopArtists {
 	 * TODO: RUN ./ngrok http 8080 to get new redirect_uri every time you run the
 	 * ngrok server, don't forget to change on Spotify Dashboard.
 	 */
-	private String redirectURI = "https://11f22450.ngrok.io";
+	private String redirectURI = "https://adbabd80.ngrok.io";
 
 	private List<Top50Artist> top50Artists;
 
@@ -113,7 +113,7 @@ public class UserTopArtists {
 			Top50Artist artist = new Top50Artist();
 			artist.setName(a.getName());
 			artist.setImageURL(a.getImages()[0].getUrl());
-			artist.setSpotifyURL(a.getHref());
+			artist.setSpotifyURL(a.getExternalUrls().get("spotify"));
 			t.add(artist);
 		}
 		return t;

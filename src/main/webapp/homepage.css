@@ -72,6 +72,15 @@
   font-family: "Lato", sans-serif;
 }
 
+.overlay-events {
+  height: 100%;
+  font-family: "Baloo Da 2", cursive;
+}
+
+.events-loader {
+  margin-top: 10%;
+}
+
 .list-group {
   max-height: 350px;
   bottom: 20%;
@@ -85,7 +94,7 @@
 }
 
 .overlay-header {
-  height: 70%;
+  height: 40%;
   text-align: center;
 }
 

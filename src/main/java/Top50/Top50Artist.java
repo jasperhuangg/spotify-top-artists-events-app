@@ -30,6 +30,10 @@ public class Top50Artist implements Comparable<Top50Artist> {
 		return name;
 	}
 
+	public List<UpcomingEvent> getUpcomingEvents() {
+		return upcomingEvents;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -88,94 +92,99 @@ public class Top50Artist implements Comparable<Top50Artist> {
 	}
 
 	public void CreateEvents() {
-//		System.out.println("ARTIST: " + name);
+		System.out.println("Creating events for");
+		System.out.println("ARTIST: " + name);
 		upcomingEvents = new ArrayList<UpcomingEvent>();
 		String url = "https://api.songkick.com/api/3.0/search/artists.json?apikey=" + songKickAPIKey + "&query="
 				+ name.replace(" ", "+");
-
+		System.out.println(url);
 		String jsonResponse = getJSON(url);
+		System.out.println(jsonResponse);
 		JsonObject response = new JsonParser().parse(jsonResponse).getAsJsonObject();
-		Integer artistID = Integer.parseInt(response.get("resultsPage").getAsJsonObject().get("results")
-				.getAsJsonObject().get("artist").getAsJsonArray().get(0).getAsJsonObject().get("id").getAsString());
-		url = "https://api.songkick.com/api/3.0/artists/" + artistID + "/calendar.json?apikey=" + songKickAPIKey
-				+ "&max_date=" + GetMaxDate(6);
-		if (name.equals("Arizona Zervas"))
-			System.out.println(url);
-		jsonResponse = getJSON(url);
-		response = new JsonParser().parse(jsonResponse).getAsJsonObject();
-//		System.out.println(response);
-		if (!response.get("resultsPage").getAsJsonObject().get("totalEntries").getAsString().equals("0")) {
-			JsonArray events = response.get("resultsPage").getAsJsonObject().get("results").getAsJsonObject()
-					.get("event").getAsJsonArray();
-			for (int i = 0; i < events.size(); i++) {
+		if (response.get("resultsPage").getAsJsonObject().get("totalEntries").getAsInt() > 0) {
+			Integer artistID = Integer.parseInt(response.get("resultsPage").getAsJsonObject().get("results")
+					.getAsJsonObject().get("artist").getAsJsonArray().get(0).getAsJsonObject().get("id").getAsString());
+			url = "https://api.songkick.com/api/3.0/artists/" + artistID + "/calendar.json?apikey=" + songKickAPIKey
+					+ "&max_date=" + GetMaxDate(6);
+			if (name.equals("Arizona Zervas"))
+				System.out.println(url);
+			jsonResponse = getJSON(url);
+			response = new JsonParser().parse(jsonResponse).getAsJsonObject();
+			System.out.println(response);
+			if (!response.get("resultsPage").getAsJsonObject().get("totalEntries").getAsString().equals("0")) {
+				JsonArray events = response.get("resultsPage").getAsJsonObject().get("results").getAsJsonObject()
+						.get("event").getAsJsonArray();
+				for (int i = 0; i < events.size(); i++) {
 //				System.out.println("NEW EVENT: ");
-				// TODO: HANDLE NULL VALUES, add event image
+					// TODO: HANDLE NULL VALUES, add event image
 
-				UpcomingEvent e = new UpcomingEvent();
-				e.setName(events.get(i).getAsJsonObject().get("displayName").getAsString());
+					UpcomingEvent e = new UpcomingEvent();
+					e.setName(events.get(i).getAsJsonObject().get("displayName").getAsString());
 //				System.out.println(events.get(i).getAsJsonObject().get("displayName").getAsString());
-				e.setSongKickURL(events.get(i).getAsJsonObject().get("uri").getAsString());
+					e.setSongKickURL(events.get(i).getAsJsonObject().get("uri").getAsString());
 //				System.out.println(events.get(i).getAsJsonObject().get("uri").getAsString());
-				e.setCity(events.get(i).getAsJsonObject().get("location").getAsJsonObject().get("city").getAsString());
+					e.setCity(events.get(i).getAsJsonObject().get("location").getAsJsonObject().get("city")
+							.getAsString());
 //				System.out.println(
 //						events.get(i).getAsJsonObject().get("location").getAsJsonObject().get("city").getAsString());
-				e.setStatus(events.get(i).getAsJsonObject().get("status").getAsString());
+					e.setStatus(events.get(i).getAsJsonObject().get("status").getAsString());
 //				System.out.println(events.get(i).getAsJsonObject().get("status").getAsString());
 
-				if (!events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("lat").toString()
-						.equals("null")) {
-					e.setVenueLat(
-							events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("lat").getAsDouble());
+					if (!events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("lat").toString()
+							.equals("null")) {
+						e.setVenueLat(events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("lat")
+								.getAsDouble());
 //					System.out.println(
 //							events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("lat").getAsDouble());
-				} else {
-					e.setVenueLat(6969696969.0); // trash value to check later
+					} else {
+						e.setVenueLat(6969696969.0); // trash value to check later
 //					System.out.println("no lat available");
-				}
-				if (!events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("lng").toString()
-						.equals("null")) {
-					e.setVenueLong(
-							events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("lng").getAsDouble());
+					}
+					if (!events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("lng").toString()
+							.equals("null")) {
+						e.setVenueLong(events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("lng")
+								.getAsDouble());
 //					System.out.println(
 //							events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("lng").getAsDouble());
-				} else {
+					} else {
 //					System.out.println("no long available");
-					e.setVenueLong(6969696969.0); // trash value to check later
-				}
+						e.setVenueLong(6969696969.0); // trash value to check later
+					}
 
-				if (!events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("displayName").toString()
-						.equals("null")) {
+					if (!events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("displayName").toString()
+							.equals("null")) {
 //					System.out.println(events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("displayName")
 //							.getAsString());
-					e.setVenueName(events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("displayName")
-							.getAsString());
-				} else {
+						e.setVenueName(events.get(i).getAsJsonObject().get("venue").getAsJsonObject().get("displayName")
+								.getAsString());
+					} else {
 //					System.out.println("no venue available");
-					e.setVenueName("No venue name available.");
-				}
+						e.setVenueName("No venue name available.");
+					}
 
-				e.setDate(events.get(i).getAsJsonObject().get("start").getAsJsonObject().get("date").getAsString());
+					e.setDate(events.get(i).getAsJsonObject().get("start").getAsJsonObject().get("date").getAsString());
 //				System.out.println(
 //						events.get(i).getAsJsonObject().get("start").getAsJsonObject().get("date").getAsString());
 
-				if (!events.get(i).getAsJsonObject().get("start").getAsJsonObject().get("time").toString()
-						.equals("null")) {
-					e.setTime(events.get(i).getAsJsonObject().get("start").getAsJsonObject().get("time").getAsString());
+					if (!events.get(i).getAsJsonObject().get("start").getAsJsonObject().get("time").toString()
+							.equals("null")) {
+						e.setTime(events.get(i).getAsJsonObject().get("start").getAsJsonObject().get("time")
+								.getAsString());
 //					System.out.println("time: "
 //							+ events.get(i).getAsJsonObject().get("start").getAsJsonObject().get("time").getAsString());
 
-				} else {
-					e.setTime("No time available.");
+					} else {
+						e.setTime("No time available.");
 //					System.out.println("No time available.");
-				}
+					}
 
-				upcomingEvents.add(e);
+					upcomingEvents.add(e);
 //				System.out.println();
-			}
-		} /*
-			 * else System.out.println("No events for artist");
-			 */
-
+				}
+			} /*
+				 * else System.out.println("No events for artist");
+				 */
+		}
 	}
 
 	private String getJSON(String url) {

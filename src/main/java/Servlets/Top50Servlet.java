@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -19,7 +20,7 @@ public class Top50Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-//		HttpSession session = req.getSession(true);
+		HttpSession session = req.getSession(true);
 		String OAuthCode = req.getParameter("oauthcode");
 //		System.out.println(OAuthCode);
 		UserTopArtists uta = new UserTopArtists();
@@ -28,8 +29,8 @@ public class Top50Servlet extends HttpServlet {
 
 		List<Top50Artist> top50Artists = uta.GetUsersTopArtists();
 
-//		Top50 top50 = new Top50();
-//		List<Top50Artist> top50Artists = top50.getTop50Artists();
+//		for (int i = 0; i < 5; i++)
+//			top50Artists.get(i).CreateEvents();
 
 		// original code
 		String top50ArtistsJson = new Gson().toJson(top50Artists);
@@ -37,7 +38,7 @@ public class Top50Servlet extends HttpServlet {
 		res.setCharacterEncoding("UTF-8");
 		res.getWriter().write(top50ArtistsJson);
 
-//		session.setAttribute("top50list", top50Artists);
+		session.setAttribute("top50list", top50Artists);
 //
 //		RequestDispatcher dispatch = getServletContext().getRequestDispatcher(req.getContextPath() + "/index.jsp");
 //		dispatch.forward(req, res);

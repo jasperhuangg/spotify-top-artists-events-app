@@ -25,69 +25,133 @@ $.get("Top50Servlet", {
     var artistName = $(
       '<div class="text-center artist-name font-italic">' + item.name + "</div>"
     );
+
     var artistImage = $('<img class="artist-img" src="' + item.imageURL + '">');
+
+    var artistSpotifyURL = $(
+      "<div style='display:none;'>" + item.spotifyURL + "</div>"
+    );
+
+    var artistRanking = $(
+      "<div style='display:none;'>" + (index + 1) + "</div>"
+    );
 
     artistItem.append(artistName);
     artistItem.append(artistImage);
+    artistItem.append(artistSpotifyURL);
+    artistItem.append(artistRanking);
     $("#artists-container").append(artistItem);
-
-    // handle overlay clicks
-    $(".artist-item").on("click", function() {
-      $(".artist-overlay").remove();
-      // console.log($(this).children());
-      let artistName = $(this).children()[1].innerHTML;
-      let artistImgURL = $(this).children()[2].src;
-      // let artistTracklist = [];
-
-      // for (let i = 0; i < item.length; i++) {
-      //   if (item[i].name === artistName) {
-      //     artistTracklist = item[i].top50Tracks;
-      //     break;
-      //   }
-      // }
-      // create overlay element
-      var artistOverlay = $('<div class="artist-overlay"></div>');
-      var overlayHeader = $(
-        '<div class="row align-items-center overlay-header"></div>'
-      );
-      var overlayName = $(
-        '<div class="col-6 h1 font-italic overlay-name text-center text-white">' +
-          // count +
-          // ". " +
-          artistName +
-          "</div>"
-      );
-      var overlayEventsRedirect = $(
-        '<button type="button" style="left:16% !important;"class="events-redirect col-2 btn btn-danger">' +
-          "Artist Page" +
-          "</button>"
-      );
-      overlayEventsRedirect.css("z-index", 500);
-      var overlayImg = $(
-        '<div class="col-6 overlay-img"><img  src="' +
-          artistImgURL +
-          '"><div class="x-out"><i class="far fa-times-circle"></i></div></div>'
-      );
-      overlayHeader.append(overlayName);
-      overlayHeader.append(overlayImg);
-      overlayHeader.append(overlayEventsRedirect);
-
-      // var overlayTracklist = $('<ul class="list-group"></ul>');
-      // for (let i = 0; i < artistTracklist.length; i++) {
-      //   var track = $(
-      //     '<li class="list-group-item"><i>' +
-      //       artistTracklist[i].name +
-      //       "</i> - " +
-      //       artistTracklist[i].mainArtistName +
-      //       "</li>"
-      //   );
-      //   overlayTracklist.append(track);
-      // }
-      artistOverlay.append(overlayHeader);
-      // artistOverlay.append(overlayTracklist);
-      $(".container-fluid").append(artistOverlay);
-    });
   });
+});
+
+// handle overlay clicks
+$(document).on("click", ".artist-item", function() {
+  $(".artist-overlay").css("display", "none"); // hide the open overlay
+  let artistName = $(this).children()[1].innerHTML;
+  let artistNameNoSpace = $(this)
+    .children()[1]
+    .innerHTML.replace(" ", "-");
+  let artistImgURL = $(this).children()[2].src;
+  let artistSpotifyUrl = $(this).children()[3].innerHTML;
+  let artistRanking = $(this).children()[4].innerHTML;
+
+  let overlays = $(".artist-overlay");
+  // console.log(overlays.length + " overlays exist");
+
+  let overlayThatAlreadyExists = null;
+
+  // check if an overlay already exists with the artist's name
+  // if one already exists, just set it's display to inline-block to display it
+  // if one doesn't exist, create it
+
+  for (let i = 0; i < overlays.length; i++) {
+    if (overlays[i].children[0].children[0].innerHTML === artistName) {
+      // if we are clicking on an overlay that already exists
+      overlayThatAlreadyExists = overlays[i];
+      // console.log("overlay you just clicked already exists.");
+      overlayThatAlreadyExists.style.display = "inline-block";
+    }
+  }
+
+  if (overlayThatAlreadyExists === null) {
+    // create overlay element
+    var artistOverlay = $('<div class="artist-overlay"></div>');
+    var overlayHeader = $(
+      '<div class="row align-items-center overlay-header"></div>'
+    );
+    var overlayName = $(
+      '<div class="col-5 h1 font-italic overlay-name text-center text-white">' +
+        artistRanking +
+        ". " +
+        artistName +
+        "</div>"
+    );
+
+    var overlayEvents = $(
+      '<div id="overlay-events-' +
+        artistNameNoSpace +
+        '"class="overlay-events container-fluid text-center"></div>'
+    );
+    var overlayLoader = $(
+      '<div class="events-loader lds-ring"><div></div><div></div><div></div><div></div></div>'
+    );
+    overlayEvents.append(overlayLoader);
+    var overlaySpotifyRedirect = $(
+      '<button type="button" onclick="spotifyRedirect(\'' +
+        artistSpotifyUrl +
+        '\');" style="left:13% !important;"class="events-redirect col-2 btn btn-danger">' +
+        "See on Spotify" +
+        "</button>"
+    );
+
+    overlaySpotifyRedirect.css("z-index", 500);
+    var overlayImg = $(
+      '<div class="col-7 overlay-img"><img  src="' +
+        artistImgURL +
+        '"><div class="x-out"><i class="far fa-times-circle"></i></div></div>'
+    );
+
+    overlayHeader.append(overlayName);
+    overlayHeader.append(overlayImg);
+    overlayHeader.append(overlaySpotifyRedirect);
+    artistOverlay.append(overlayHeader);
+    artistOverlay.append(overlayEvents);
+    // artistOverlay.append(overlayTracklist);
+    $(".container-fluid").append(artistOverlay);
+
+    console.log("doing get for: " + artistName);
+    // make request to ArtistEventServlet, get artist's events
+    $.get("ArtistEventServlet", { requestedartist: artistName }).done(function(
+      responseJson
+    ) {
+      console.log(
+        "returned " + responseJson.length + " events for: " + artistName
+      );
+
+      /* TODO: since the overlay-events div is being created dynamically,
+      the ID selector doesn't work (only the first one works).
+      Can't display artist's events till this is resolved. */
+
+      $(document).ready(function() {
+        if (responseJson.length === 0) {
+          $("#overlay-events-" + artistNameNoSpace).html(
+            "This artist has no upcoming events."
+          );
+          $("#overlay-events-" + artistNameNoSpace).css("color", "white");
+        } else {
+          console.log("showing events for " + artistName);
+
+          $("#overlay-events-" + artistNameNoSpace).html(
+            "This area will show " +
+              artistName +
+              "'s " +
+              responseJson.length +
+              " events."
+          );
+        }
+      });
+    });
+  }
 });
 
 $("#search-bar").on("keyup", function() {
@@ -119,31 +183,34 @@ $(".search").on("click", function() {
 });
 
 $(document).on("keydown", function() {
-  if (event.key === "Escape") $(".artist-overlay").remove();
+  if (event.key === "Escape") $(".artist-overlay").css("display", "none");
 });
 
-$(document).on("click", ".events-redirect", function(e) {
-  console.log("click");
+function spotifyRedirect(url) {
+  console.log(url);
+  window.open(url);
+}
 
-  let artistName = $(this)
-    .parent()
-    .children()[0].innerHTML;
-  localStorage["requestedArtist"] = artistName;
+// $(document).on("click", ".events-redirect", function(e) {
+//   let artistName = $(this)
+//     .parent()
+//     .children()[0].innerHTML;
+//   // localStorage["requestedArtist"] = artistName;
 
-  window.location.replace("/artist.html");
-  e.preventDefault();
-  // $.ajax({
-  //   url: "/ArtistEventServlet",
-  //   data: {
-  //     requestedartist: artistName
-  //   },
-  //   type: "GET",
-  //   success: function(data) {
-  //     window.location.replace("/artist.html");
-  //   }
-  // });
-});
+//   // window.location.replace("/artist.html");
+//   e.preventDefault();
+//   // $.ajax({
+//   //   url: "/ArtistEventServlet",
+//   //   data: {
+//   //     requestedartist: artistName
+//   //   },
+//   //   type: "GET",
+//   //   success: function(data) {
+//   //     window.location.replace("/artist.html");
+//   //   }
+//   // });
+// });
 
 $(document).on("click", ".x-out", function() {
-  $(".artist-overlay").remove();
+  $(".artist-overlay").css("display", "none");
 });
